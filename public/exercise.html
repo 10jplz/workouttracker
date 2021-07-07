@@ -32,10 +32,23 @@
             </select>
           </div>
           <div class="cardio-form d-none">
+
             <div class="cardio-name">
+              <label for="cardio-name">Cardio Name:</label>
+              <select name="cardio-name" id="cardio-name">
+                <option disabled selected>Select Cardio Type</option>
+                <option value="Running">Running</option>
+                <option value="Cycling">Cycling</option>
+                <option value="Swimming">Swimming</option>
+
+              </select>
+            </div>
+
+
+            <!-- <div class="cardio-name">
               <label for="cardio-name">Name:</label>
               <input type="text" name="cardio-name" id="cardio-name" placeholder="Running" />
-            </div>
+            </div> -->
             <div class="distance">
               <label for="distance">Distance (miles):</label>
               <input type="number" name="distance" id="distance" placeholder="5" />
