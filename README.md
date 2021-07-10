@@ -3,6 +3,7 @@
   ----
   # Workout Tracker
   ![Alt text](./media/workout.png)
+  # Local Demo showing functionality
   ![Alt text](./media/localdemo.gif)
 
   ## Description 
