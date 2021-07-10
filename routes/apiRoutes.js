@@ -1,66 +1,52 @@
-const router = require("express").Router();
-const Workout = require("../models/workout.js");
-const mongoose = require("mongoose");
-const { json } = require("express")
 
-router.post("/api/workouts", ({data}, res) => {
-  
-  Workout.create(data)
-    .then(dbWorkout => {
-      res.json(dbWorkout);
-    })
-    .catch(err => {
-      res.status(400).json(err);
-    });
-});
+const { Router } = require('express');
+const { Workout } = require('../models');
+var db = require("../models");
 
-router.put("/api/workouts/:id", (req, res) => {
-  
-  Workout.findByIdAndUpdate(mongoose.Types.ObjectId(req.params.id), {
-    $push: { exercises: req.body },
-  })
-    .then(workout => {
-      res.json(workout);
-    })
-    .catch(e => console.log(e));
-});
+const router = Router()
 
 router.get("/api/workouts", (req, res) => {
-  Workout.aggregate([
-    {
-      $addFields: {
-        totalDuration: {
-          $sum: "$exercises.duration",
-        },
-      },
-    },
-  ])
-    .then(dbWorkout => {
-      res.json(dbWorkout);
+    db.Workout.find({}).then(Workout => {
+        res.json(Workout)
     })
-    .catch(err => {
-      res.status(400).json(err);
-    });
-});
+        .catch(err => {
+            res.status(400).json(err);
+        });
+})
+
+router.post("/api/workouts", (req, res) => {
+    db.Workout.create(req.body).then(Workout => {
+        res.json(Workout)
+    })
+        .catch(err => {
+            res.status(400).json(err);
+        });
+})
+
+router.put("/api/workouts/:id", (req, res) => {
+    db.Workout.findOneAndUpdate({ _id: req.params.id }, { $push: { exercises: req.body } }, { new: true, runValidators: true }).then(Workout => {
+        res.json(Workout)
+    })
+        .catch(err => {
+            res.status(400).json(err);
+        });
+})
+
 router.get("/api/workouts/range", (req, res) => {
-  Workout.aggregate([
-    {
-      $addFields: {
-        totalDuration: {
-          $sum: "$exercises.duration",
+    db.Workout.aggregate([
+        {
+            $addFields: {
+                totalDuration: { $sum: "$exercises.duration" },
+                totalWeight: { $sum: "$exercises.weight" }
+            }
         },
-      },
-    },
-  ])
-    .sort({ _id: -1 })
-    .limit(7)
-    .then(dbWorkouts => {
-      console.log(dbWorkouts);
-      res.json(dbWorkouts);
+    ]).sort({ _id: -1 }).limit(7).then(Workout => {
+        res.json(Workout)
+    }).catch(err => {
+        res.status(400).json(err);
     })
-    .catch(err => {
-      res.json(err);
-    });
+
 });
 
-module.exports = router;
+
+module.exports = router
