@@ -2,6 +2,8 @@
   [![License](https://img.shields.io/badge/License-MIT-yellow.svg)]
   ----
   # Workout Tracker
+  ![Alt text](./media/workout.png)
+  ![Alt text](./media/localdemo.gif)
 
   ## Description 
 
@@ -37,11 +39,11 @@
 
    ## Github Repository
 
-   www.google.com
+https://github.com/10jplz/workouttracker
 
    ## Deployed App
    
-   www.google.com
+https://jworkouttracker.herokuapp.com/
 
   ## How to Contact Developer
 
